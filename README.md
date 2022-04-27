@@ -21,6 +21,24 @@
 3. `make stop` — остановит сервис
 4. `make start` — если сервис однажды был собран, включит его, не пересобирая (это быстрее)
 
+### Особенности Windows
+
+Чтобы запустить этот бэкэнд на ОС Windows, может потребоваться установка `make`. 
+
+Для этого:
+
+В powershell с правами администратора устанавливаем `chocolatey` командой
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+Ставим make
+
+```powershell
+choco install make
+```
+
 ## Вопросы
 
 Если возникли вопросы, пишите в slack, вам помогут.
