@@ -13,7 +13,7 @@ var UserSchema = new mongoose.Schema({
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   hash: String,
   salt: String
-}, {timestamps: true});
+}, {timestamps: true, usePushEach: true});
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
 
