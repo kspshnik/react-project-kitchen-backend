@@ -3,16 +3,25 @@ var uniqueValidator = require('mongoose-unique-validator');
 var slug = require('slug');
 var User = mongoose.model('User');
 
+const urlRegExp = new RegExp('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w.-]+)+[\\w\\-._~:/?#[\\]@!$&\'()*+,;=.]+$');
+
 var ArticleSchema = new mongoose.Schema({
   slug: {type: String, lowercase: true, unique: true},
   title: String,
   description: String,
   body: String,
+    link: {
+        type: String,
+        validate: {
+            validator: (v) => urlRegExp.test(v),
+            message: 'Поле "link" должно быть валидным url-адресом.',
+        },
+    },
   favoritesCount: {type: Number, default: 0},
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   tagList: [{ type: String }],
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-}, {timestamps: true});
+}, {timestamps: true, usePushEach: true});
 
 ArticleSchema.plugin(uniqueValidator, {message: 'is already taken'});
 
@@ -44,6 +53,7 @@ ArticleSchema.methods.toJSONFor = function(user){
     title: this.title,
     description: this.description,
     body: this.body,
+    link: this.link,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
     tagList: this.tagList,
