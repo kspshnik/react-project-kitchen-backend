@@ -29,6 +29,9 @@ router.put('/user', auth.required, function(req, res, next){
     if(typeof req.body.user.image !== 'undefined'){
       user.image = req.body.user.image;
     }
+    if(typeof req.body.user.nickname !== 'undefined'){
+      user.nickname = req.body.user.nickname;
+    }
     if(typeof req.body.user.password !== 'undefined'){
       user.setPassword(req.body.user.password);
     }
@@ -66,6 +69,9 @@ router.post('/users', function(req, res, next){
   user.username = req.body.user.username;
   user.email = req.body.user.email;
   user.setPassword(req.body.user.password);
+  if(typeof req.body.user.nickname !== 'undefined'){
+    user.nickname = req.body.user.nickname;
+  }
 
   user.save().then(function(){
     return res.json({user: user.toAuthJSON()});
