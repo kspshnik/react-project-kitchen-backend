@@ -169,6 +169,10 @@ router.put('/:article', auth.required, function(req, res, next) {
         req.article.tagList = req.body.article.tagList
       }
 
+      if(typeof req.body.article.link !== 'undefined'){
+        req.article.link = req.body.article.link
+      }
+
       req.article.save().then(function(article){
         return res.json({article: article.toJSONFor(user)});
       }).catch(next);
